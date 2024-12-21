@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 4040;
+
+// Router
 const indexRouter = require('./routes/index');
 const connectToDb = require("./config/db");
 const authRouter = require("./routes/auth");
@@ -10,6 +12,8 @@ const productRouter = require("./routes/product");
 const categoriesRouter = require("./routes/category");
 const userRouter = require("./routes/user");
 const cartRouter = require("./routes/cart");
+
+// Dependencies
 require("./config/google_oauth_config");
 const expressSession = require("express-session");
 const path = require("path");
@@ -28,8 +32,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
 
-// require("./config/db");
+// MongoDB Connection
 connectToDb();
+
+// Routes
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
 app.use("/admin", adminRouter);
@@ -38,7 +44,7 @@ app.use("/categories", categoriesRouter);
 app.use("/users", userRouter);
 app.use("/cart", cartRouter);
 
-
+// Server Listen
 app.listen(port, ()=>{
     console.log(`Server Started on PORT ${port}`);
 });
