@@ -1,0 +1,20 @@
+@media only screen and (max-width: 600px) {
+    .parawatch{
+        position: absolute;
+        bottom: 15vh;
+        left: 3vw;
+    }
+    .watch-tailerbtn{
+        position: absolute;
+        bottom: 10vh;
+        left: 2vw;
+        /* display: none; */
+    }
+    .joinsmir{
+        margin-left: -8rem;
+    }
+    /* .special-font{
+        font-size: 20px !important;
+    } */
+
+}
