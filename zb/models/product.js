@@ -41,7 +41,7 @@ const validateProduct = (data) => {
         category: Joi.string().min(3).required(),
         stock: Joi.number().required(),
         description: Joi.string().optional(),
-        image: Joi.buffer().required(),
+        // image: Joi.string().required(),
     });
 
     return productSchema.validate(data);

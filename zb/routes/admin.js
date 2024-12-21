@@ -3,7 +3,9 @@ const router = express.Router();
 const { adminModel } = require("../models/admin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const validateAdmin = require("../middlewares/admin");
+const {validateAdmin} = require("../middlewares/admin");
+const { productModel } = require("../models/product");
+const { categoryModel } = require("../models/category");
 
 router.get("/create", async function( req, res ){
     try{
@@ -17,7 +19,7 @@ router.get("/create", async function( req, res ){
         });
 
         await user.save();
-        let token = jwt.sign({email:"singhyash3012@gmail.com"}, process.env.JWT_KEY);
+        let token = jwt.sign({email:"singhyash3012@gmail.com", admin: true}, process.env.JWT_KEY);
         res.cookie("token", token);
         res.send("admin created successfully");
     }catch(err){
@@ -39,14 +41,45 @@ router.post("/login", async function(req,res){
 
     let valid = await bcrypt.compare(password, admin.password);
     if(valid){
-        let token = jwt.sign({email:"singhyash3012@gmail.com"}, process.env.JWT_KEY);
+        let token = jwt.sign({email:"singhyash3012@gmail.com", admin: true}, process.env.JWT_KEY);
         res.cookie("token", token);
         res.redirect("/admin/dashboard");
     }
 });
 
-router.get("/dashboard", validateAdmin,  function(req,res){
-    res.render("admin_dashboard");
+router.get("/dashboard", validateAdmin, async function(req,res){
+    let prodcount = await productModel.countDocuments();
+    let categcount = await categoryModel.countDocuments();
+    res.render("admin_dashboard", { prodcount , categcount });
+});
+
+router.get("/products", validateAdmin, async function(req,res){
+    const resultArray = await productModel.aggregate([
+        {
+            $group:{
+                _id: "$category",
+                products: {$push:"$$ROOT"}
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                category: "$_id",
+                products: { $slice: ["$products", 10]}
+            }
+        }
+    ]);
+
+    const resultObject = resultArray.reduce((acc,item)=>{
+        acc[item.category] = item.products;
+        return acc;
+    },{});
+    res.render("admin_products", {products: resultObject});
+});
+
+router.get("/logout",validateAdmin, function(req,res){
+    res.cookie("admin_dashboard");
+    res.redirect("/admin/login");
 });
 
 module.exports = router;
