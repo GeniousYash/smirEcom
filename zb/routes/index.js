@@ -5,9 +5,9 @@ router.get("/", (req, res)=>{
     res.send("Welcome to SMIR ECOM");
 });
 
-router.get("/map/:orderid", (req, res)=>{
-    res.render("map", { orderid:req.params.orderid });
-});
+// router.get("/map/:orderid", (req, res)=>{
+//     res.render("map", { orderid:req.params.orderid });
+// });
 
 
 module.exports = router;

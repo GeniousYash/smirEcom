@@ -28,7 +28,7 @@ router.get("/:userid/:orderid/:paymentid/:signature",async (req,res)=>{
     else{
         res.send("Invalid Payment")
     }
-})
+});
 
 
 router.post("/address/:orderid",async (req,res)=>{
@@ -38,6 +38,6 @@ router.post("/address/:orderid",async (req,res)=>{
     order.address = req.body.address;
     order.save();
     res.redirect("/");
-})
+});
 
 module.exports = router;
