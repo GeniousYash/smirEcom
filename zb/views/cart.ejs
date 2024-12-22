@@ -36,7 +36,7 @@
                                 <p class="mx-2">
                                     <%= elem.quantity %>
                                 </p>
-                                <button class="px-2 py-1 rounded"><i class="ri-add-line"></i></button>
+                                <a href="/cart/add/<%= elem._id %>"><button class="px-2 py-1 rounded"><i class="ri-add-line"></i></button></a>
                             </div>
                             <div class="flex gap-2 mt-4">
                                 <p class="text-gray-500 line-through">₹<%= Number(elem.price)*Number(elem.quantity)+200
@@ -194,10 +194,10 @@
                 axios.post('/payment/create/orderId')
                     .then(function (response) {
                         var options = {
-                            "key": "rzp_test_cAa3gCF0eP8i4R", // Enter the Key ID generated from the Dashboard
+                            "key": "rzp_test_u1rNVF751Iczws", // Enter the Key ID generated from the Dashboard
                             "amount": response.data.amount, // Amount in currency subunits. Default currency is INR.
                             "currency": response.data.currency,
-                            "name": "BlinkIt",
+                            "name": "SMIR",
                             "description": "Test Transaction",
                             "image": "https://example.com/your_logo",
                             "order_id": response.data.id,
@@ -209,16 +209,16 @@
                                 })
                                     .then(function (response) {
                                         let { razorpayOrderId, razorpayPaymentId, signature } = JSON.parse(response.config.data)
-                                        window.location.href = `/order/<%= userid %>/${razorpayOrderId}/${razorpayPaymentId}/${signature}`
+                                        window.location.href = `/`
                                     })
                                     .catch(function (error) {
                                         console.error(error);
                                     });
                             },
                             "prefill": {
-                                "name": "Harsh Sharma",
-                                "email": "harsh.sharma@example.com",
-                                "contact": "9000090000"
+                                "name": "Yash Singh",
+                                "email": "singhyash3012@gmail.com",
+                                "contact": "+918003316534"
                             },
                             "notes": {
                                 "address": "Razorpay Corporate Office"
@@ -246,6 +246,6 @@
                     });
             };
         </script>
-    </body>
+        </body>
 
-    <%- include('./partials/footer'); %>
+        <%- include('./partials/footer'); %>

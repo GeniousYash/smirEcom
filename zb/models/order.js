@@ -3,6 +3,10 @@ const Joi = require("joi");
 
 // Order Schema with Mongoose Validation
 const orderSchema = mongoose.Schema({
+    orderId:{
+        type:String,
+        required: true,
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",
@@ -22,8 +26,7 @@ const orderSchema = mongoose.Schema({
     },
     address: {
         type: String,
-        required: [true, "Delivery address is required"],
-        minlength: [10, "Address must be at least 10 characters long"],
+        minlength: [5, "Address must be at least 5 characters long"],
     },
     status: {
         type: String,
@@ -54,7 +57,7 @@ const validateOrder = (data) => {
             .min(1)
             .required(),
         totalPrice: Joi.number().min(0).required(),
-        address: Joi.string().min(10).required(),
+        address: Joi.string().min(5).optional(),
         status: Joi.string()
             .valid("pending", "processing", "shipped", "delivered", "cancelled")
             .required(),

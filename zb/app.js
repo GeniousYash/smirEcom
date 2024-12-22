@@ -12,6 +12,8 @@ const productRouter = require("./routes/product");
 const categoriesRouter = require("./routes/category");
 const userRouter = require("./routes/user");
 const cartRouter = require("./routes/cart");
+const paymentRouter = require("./routes/payment");
+const orderRouter = require("./routes/order");
 
 // Dependencies
 require("./config/google_oauth_config");
@@ -43,6 +45,8 @@ app.use("/products", productRouter);
 app.use("/categories", categoriesRouter);
 app.use("/users", userRouter);
 app.use("/cart", cartRouter);
+app.use("/payment", paymentRouter);
+app.use("/order", orderRouter);
 
 // Server Listen
 app.listen(port, ()=>{

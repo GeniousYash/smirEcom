@@ -25,9 +25,9 @@ router.get("/", userIsLoggedIn, async function(req,res){
         });
         let finalarray = Object.values(CartDataStructure);
 
-        let finalprice = cart.totalPrice + 34;
+        let finalprice = cart.totalPrice;
 
-        res.render( "cart", { cart: finalarray, finalprice: finalprice });
+        res.render( "cart", { cart: finalarray, finalprice: finalprice, userid: req.session.passport });
     } catch (error) {
         res.send(error.message);
     }
