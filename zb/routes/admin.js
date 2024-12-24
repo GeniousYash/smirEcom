@@ -50,7 +50,8 @@ router.post("/login", async function(req,res){
 router.get("/dashboard", validateAdmin, async function(req,res){
     let prodcount = await productModel.countDocuments();
     let categcount = await categoryModel.countDocuments();
-    res.render("admin_dashboard", { prodcount , categcount });
+    // res.render("admin_dashboard",{ prodcount , categcount });
+    res.status(200).json({ prodcount , categcount });
 });
 
 router.get("/products", validateAdmin, async function(req,res){
@@ -74,8 +75,22 @@ router.get("/products", validateAdmin, async function(req,res){
         acc[item.category] = item.products;
         return acc;
     },{});
-    res.render("admin_products", {products: resultObject});
+    // res.render("admin_products", {products: resultObject});
+    res.status(200).json({products: resultObject});
 });
+
+// router.post("/products/search/:id", validateAdmin,  async function(req,res){
+//     try {
+//         if(req.user.admin){
+//             await productModel.findOne({_id: req.body.product_id});
+//             // return res.render("admin_products");
+//             return res.status(200).send("Your Product is");
+//         }
+//         res.send("You are not allowed to delete this products");
+//     } catch (error) {
+//         res.send(error.message);
+//     }
+// });
 
 router.get("/logout",validateAdmin, function(req,res){
     res.cookie("admin_dashboard");

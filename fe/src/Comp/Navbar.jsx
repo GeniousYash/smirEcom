@@ -1,12 +1,11 @@
 import clsx from "clsx";
 import gsap from "gsap";
 import { useWindowScroll } from "react-use";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TiLocationArrow } from "react-icons/ti";
 import logoSMIR from "/icons/whitelogo.png";
 import { LiaOpencart } from "react-icons/lia";
 import { CgProfile } from "react-icons/cg";
-import { UserDataContext } from "../context/UserContext";
 
 
 
@@ -22,7 +21,6 @@ const NavBar = () => {
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
     const [isIndicatorActive, setIsIndicatorActive] = useState(false);
 
-    const { user } = useContext(UserDataContext);
 
     // Refs for audio and navigation container
     const audioElementRef = useRef(null);

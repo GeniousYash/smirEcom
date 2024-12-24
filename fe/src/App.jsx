@@ -11,10 +11,12 @@ import Shop from "./Pages/Shop";
 import "./App.css";
 import BestSeller from "./Pages/BestSeller";
 import ScrollToTop from "./Componants/ScrollToTop";
-import UserSignup from "./Pages/UserSignup";
 import UserLogin from "./Pages/UserLogin";
-import UserProtectedWrapper from "./Pages/UserProtectedWrapper";
 import UserLogout from "./Pages/UserLogout";
+import AdminLogin from "./Pages/AdminLogin";
+import AdminDashboard from "./Pages/AdminDashboard";
+import AdminSignup from "./Pages/AdminSignup";
+import AdminProducts from "./Pages/AdminProducts";
 
 
 
@@ -26,25 +28,23 @@ function App() {
 
 
     return (
-        <div className="w-full h-[100%]">
+        <div className="w-full h-[100%] bg-[#dadada]">
             <WhatsAppBtn />
             <AnimatePresence mode="wait">
                 <ScrollToTop />
                 <Routes location={location} key={location.pathname}>
-                    <Route path="/" element={
-                        <Home />
-                    } />
+                    <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/blogs" element={<Blogs />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/BestSeller" element={<BestSeller />} />
-                    <Route path="/signup" element={<UserSignup />} />
                     <Route path="/login" element={<UserLogin />} />
-                    <Route path='/user/logout'
-                        element={<UserProtectedWrapper>
-                            <UserLogout />
-                        </UserProtectedWrapper>} />
+                    <Route path='/user/logout' element={<UserLogout />} />
+                    <Route path="/admin-signup" element={<AdminSignup />} />
+                    <Route path='/admin-login' element={<AdminLogin />} />
+                    <Route path='/admin-dashboard' element={<AdminDashboard />} />
+                    <Route path='/admin-products' element={<AdminProducts />} />
                 </Routes>
             </AnimatePresence>
         </div>

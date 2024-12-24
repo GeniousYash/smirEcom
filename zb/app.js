@@ -1,7 +1,20 @@
 require("dotenv").config();
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const port = process.env.PORT || 4040;
+
+
+
+const corsOptions = {
+    origin: 'http://localhost:5173',  // Specify the allowed origin
+    methods: ['GET', 'POST', 'PUT', 'PATCH' , 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,                // Allow credentials
+  };
+app.options("*", cors(corsOptions));
+app.use(cors(corsOptions));
+
 
 // Router
 const indexRouter = require('./routes/index');

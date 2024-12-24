@@ -4,8 +4,8 @@ require("dotenv").config();
 async function validateAdmin(req,res,next){
     try {
         let token = req.cookies.token;
-        if(!token) return res.send("you need to login first");
-        let data = await jwt.verify(token, process.env.JWT_KEY);
+        if(!token) return res.status(401).send("You need to login first");
+        let data = jwt.verify(token, process.env.JWT_KEY);
         req.user = data;
         next();
     } catch (err) {
@@ -15,7 +15,6 @@ async function validateAdmin(req,res,next){
 
 async function userIsLoggedIn(req,res,next){
     if(req.isAuthenticated()) return next();
-
     res.redirect("/users/login");
 }
 

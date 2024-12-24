@@ -27,7 +27,8 @@ router.get("/", userIsLoggedIn, async function(req,res){
 
         let finalprice = cart.totalPrice;
 
-        res.render( "cart", { cart: finalarray, finalprice: finalprice, userid: req.session.passport });
+        // res.render( "cart", { cart: finalarray, finalprice: finalprice, userid: req.session.passport });
+        res.status(200).json({ cart: finalarray, finalprice: finalprice, userid: req.session.passport });
     } catch (error) {
         res.send(error.message);
     }
@@ -60,6 +61,13 @@ router.get("/remove/:id", userIsLoggedIn, async function(req,res){
     try {
         let cart = await cartModel.findOne({ user: req.session.passport.user });
         let product = await productModel.findOne({ _id: req.params.id });
+        if (!product) {
+            return res.status(404).send("Product not found");
+        }
+        // Check if the product is in stock
+        if (product.stock <= 0) {
+            return res.status(400).send("Product is out of stock");
+        }
         if(!cart){
             return res.send("there is nothing in the cart");
         } else {
@@ -69,7 +77,8 @@ router.get("/remove/:id", userIsLoggedIn, async function(req,res){
 
             await cart.save();
         }
-
+        product.stock -= 1;
+        await product.save();
         res.redirect("back");
     } catch (error) {
         res.send(error.message);

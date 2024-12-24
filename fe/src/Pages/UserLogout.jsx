@@ -24,7 +24,7 @@ const UserLogout = () => {
                 console.error('Logout failed', error);
                 // Handle errors if necessary
             });
-    }, [navigate]); // Dependency array ensures the effect runs once on mount
+    }, [navigate]); 
 
     return <div>Logging out...</div>;
 };

@@ -15,6 +15,29 @@ router.get("/:userid/:orderid/:paymentid/:signature",async (req,res)=>{
         req.params.paymentid === paymentDetails.paymentId
     ){
         let cart = cartModel.findOne({ user: req.params.userid });
+
+        // Validate stock before creating order
+        const outOfStockProducts = [];
+        for (const productId of cart.products) {
+            let product = await productModel.findOne({ _id: productId });
+            if (product.stock <= 0) {
+                outOfStockProducts.push(product.name);
+            }
+        }
+
+        if (outOfStockProducts.length > 0) {
+            return res.status(400).send(
+                `The following products are out of stock: ${outOfStockProducts.join(", ")}`
+            );
+        }
+
+        // Deduct stock for each product
+        for (const productId of cart.products) {
+            let product = await productModel.findOne({ _id: productId });
+            product.stock -= 1;
+            await product.save();
+        }
+
         await orderModel.create({
             orderId: req.params.orderid,
             user: req.params.userid,
