@@ -10,7 +10,7 @@ import Contact from "./Pages/Contact";
 import Shop from "./Pages/Shop";
 import "./App.css";
 import BestSeller from "./Pages/BestSeller";
-import ScrollToTop from "./Componants/ScrollToTop";
+// import ScrollToTop from "./Componants/ScrollToTop";
 import UserLogin from "./Pages/UserLogin";
 import UserLogout from "./Pages/UserLogout";
 import AdminLogin from "./Pages/AdminLogin";
@@ -31,7 +31,7 @@ function App() {
         <div className="w-full h-[100%] bg-[#dadada]">
             <WhatsAppBtn />
             <AnimatePresence mode="wait">
-                <ScrollToTop />
+                {/* <ScrollToTop /> */}
                 <Routes location={location} key={location.pathname}>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />

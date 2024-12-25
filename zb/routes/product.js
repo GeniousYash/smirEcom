@@ -60,17 +60,19 @@ router.get("/",userIsLoggedIn, async function(req,res){
     });
 });
 
-router.get("/delete/:id", validateAdmin,  async function(req,res){
-    try {
-        if(req.user.admin){
-            await productModel.findOneAndDelete({_id: req.params.id});
-            return res.redirect("/admin/products");
-        }
-        res.send("You are not allowed to delete this products");
-    } catch (error) {
-        res.send(error.message);
-    }
-});
+
+
+// router.get("/delete/:id", validateAdmin,  async function(req,res){
+//     try {
+//         if(req.user.admin){
+//             await productModel.findOneAndDelete({_id: req.params.id});
+//             return res.redirect("/admin/products");
+//         }
+//         res.send("You are not allowed to delete this products");
+//     } catch (error) {
+//         res.send(error.message);
+//     }
+// });
 
 router.post("/delete", validateAdmin,  async function(req,res){
     if(req.user.admin){
